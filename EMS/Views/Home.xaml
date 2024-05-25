@@ -1,0 +1,121 @@
+﻿<Window
+    x:Class="EMS.Views.Home"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:EMS.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewmodels="clr-namespace:EMS.ViewModels"
+    xmlns:viewmodelsConverters="clr-namespace:EMS.ViewModels.Converters"
+    Title="Home"
+    Width="800"
+    Height="500"
+    d:DataContext="{d:DesignInstance Type=viewmodels:HomeViewModel}"
+    mc:Ignorable="d">
+
+    <Window.Resources>
+        <viewmodelsConverters:NullToDefaultImageConverter x:Key="NullToDefaultImageConverter" />
+        <Style TargetType="ListBox">
+            <Setter Property="FontSize" Value="22" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Padding" Value="3" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Padding" Value="3" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Padding" Value="20,10" />
+            <Setter Property="Margin" Value="5" />
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <!--  Definitions  -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+
+
+        <Border Padding="2" Background="#333">
+
+            <ListBox
+                Grid.Column="0"
+                Background="#333"
+                DisplayMemberPath="Name"
+                Foreground="#ddd"
+                ItemsSource="{Binding Employees}"
+                SelectedItem="{Binding SelectedEmployee, Mode=TwoWay}" />
+        </Border>
+
+        <StackPanel
+            Grid.Column="1"
+            Margin="10"
+            HorizontalAlignment="Center">
+            <Grid>
+                <Ellipse
+                    Width="170"
+                    Height="170"
+                    Margin="15">
+                    <Ellipse.Fill>
+                        <ImageBrush TileMode="Tile">
+                            <ImageBrush.ImageSource>
+                                <Binding
+                                    Converter="{StaticResource NullToDefaultImageConverter}"
+                                    Mode="TwoWay"
+                                    Path="SelectedEmployee.Image"
+                                    UpdateSourceTrigger="PropertyChanged" />
+                            </ImageBrush.ImageSource>
+                        </ImageBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Button
+                    Width="30"
+                    Height="30"
+                    Margin="0,20,60,0"
+                    Padding="0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Click="changeImageHandler"
+                    Content="+" />
+            </Grid>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="80">Name:</Label>
+                <TextBox Width="250" Text="{Binding SelectedEmployee.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="80">Age:</Label>
+                <TextBox Width="250" Text="{Binding SelectedEmployee.Age, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Width="80">Phone:</Label>
+                <TextBox Width="250" Text="{Binding SelectedEmployee.Phone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            </StackPanel><StackPanel Orientation="Horizontal">
+                <Label Width="80">Image:</Label>
+                <TextBox Width="250" Text="{Binding SelectedEmployee.Image, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            </StackPanel>
+
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Click="ClearFormHandler">
+                    Clear
+                </Button>
+                <Button Click="AddFormHandler">Add</Button>
+                <Button Click="DeleteFormHandler">Delete</Button>
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</Window>

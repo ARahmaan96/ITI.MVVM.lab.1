@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="db\EMS.db" />
+    <None Remove="db\media\default.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DesignData Include="db\EMS.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build" Version="17.9.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="bin\Debug\net8.0-windows\db\media\1.jpg" />
+    <Resource Include="db\media\default.jpg" />
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="xcopy &quot;$(ProjectDir)db&quot; &quot;$(TargetDir)db&quot; /E /I /Y&#xD;&#xA;" />
+  </Target>
+
+</Project>
